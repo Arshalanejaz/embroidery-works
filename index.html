@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thimble &amp; Thread — Made-to-Order Embroidery</title>
+<meta name="description" content="Hand and machine embroidery, made to order on the garment you choose.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2a2e;
+    --canvas:#efe9db;
+    --canvas-dim:#e4ddcb;
+    --marigold:#d89b3c;
+    --crimson:#a4373a;
+    --teal:#2c4a47;
+    --charcoal:#2a2622;
+    --thread-line: rgba(42,38,34,0.16);
+    --radius: 2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--charcoal);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    font-size:0.72rem;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--crimson); outline-offset:3px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(239,233,219,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--thread-line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:'Fraunces', serif; font-size:1.3rem; font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo svg{width:22px;height:22px;flex:none;}
+  nav.links{display:flex; gap:28px; align-items:center;}
+  nav.links a{
+    text-decoration:none; font-size:0.92rem; color:var(--ink);
+    position:relative; padding-bottom:2px;
+  }
+  nav.links a:not(.btn)::after{
+    content:''; position:absolute; left:0; bottom:-3px; width:0; height:1px;
+    background:var(--crimson); transition:width .25s ease;
+  }
+  nav.links a:not(.btn):hover::after{width:100%;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--canvas);
+    padding:10px 18px; border-radius:var(--radius);
+    text-decoration:none; font-size:0.85rem; font-weight:500;
+    border:1px solid var(--ink);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .btn:hover{background:var(--crimson); border-color:var(--crimson); transform:translateY(-1px);}
+  .btn.ghost{background:transparent; color:var(--ink);}
+  .btn.ghost:hover{background:var(--ink); color:var(--canvas);}
+  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .menu-toggle svg{width:24px;height:24px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:88px 0 64px; position:relative; overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    color:var(--teal); margin-bottom:18px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--crimson);}
+  h1.hero-title{
+    font-size:clamp(2.4rem, 4.6vw, 3.6rem);
+    line-height:1.05;
+  }
+  h1.hero-title .stitch{
+    position:relative; white-space:nowrap; color:var(--crimson); font-style:italic; font-weight:500;
+  }
+  h1.hero-title .stitch svg{
+    position:absolute; left:0; bottom:-10px; width:100%; height:12px;
+  }
+  .hero p.lede{
+    margin-top:22px; max-width:46ch; font-size:1.08rem; color:#4b463f;
+  }
+  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+
+  .swatch-board{
+    position:relative; height:420px;
+  }
+  .swatch{
+    position:absolute; width:190px; background:var(--canvas); border:1px solid var(--thread-line);
+    padding:14px; box-shadow:0 14px 30px -14px rgba(31,42,46,0.35);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .swatch:hover{transform:translateY(-6px) rotate(0deg) !important; box-shadow:0 20px 34px -12px rgba(31,42,46,0.4); z-index:5;}
+  .swatch img{width:100%; height:140px; object-fit:cover; border:1px solid var(--thread-line);}
+  .swatch .code{margin-top:10px; display:flex; justify-content:space-between; align-items:baseline;}
+  .swatch .code .n{font-family:'JetBrains Mono'; font-size:0.75rem; color:var(--teal);}
+  .swatch .code .name{font-size:0.82rem; font-weight:500;}
+  .s1{top:0; left:6%; transform:rotate(-6deg); z-index:2;}
+  .s2{top:60px; left:44%; transform:rotate(4deg); z-index:3;}
+  .s3{top:230px; left:10%; transform:rotate(3deg); z-index:1;}
+  .s4{top:190px; left:52%; transform:rotate(-4deg); z-index:2;}
+
+  /* ---------- section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head .mono{color:var(--teal); margin-bottom:14px; display:block;}
+  .section-head h2{font-size:clamp(1.8rem, 3vw, 2.4rem);}
+  .section-head p{margin-top:14px; color:#4b463f;}
+
+  /* ---------- how it works ---------- */
+  .how{background:var(--canvas-dim); border-top:1px solid var(--thread-line); border-bottom:1px solid var(--thread-line);}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
+  .step{position:relative; padding-top:28px;}
+  .step .num{
+    font-family:'Fraunces', serif; font-style:italic; font-size:2.4rem; color:var(--marigold);
+    display:block; margin-bottom:14px;
+  }
+  .step h3{font-size:1.15rem; margin-bottom:10px;}
+  .step p{color:#4b463f; font-size:0.95rem;}
+  .step:not(:last-child)::after{
+    content:''; position:absolute; top:34px; right:-18px; width:1px; height:60%;
+    background:repeating-linear-gradient(to bottom, var(--thread-line) 0 6px, transparent 6px 12px);
+  }
+  @media (max-width:820px){ .step:not(:last-child)::after{display:none;} }
+
+  /* ---------- gallery ---------- */
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  }
+  .card{
+    background:var(--canvas); border:1px solid var(--thread-line); overflow:hidden;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .card:hover{transform:translateY(-5px); box-shadow:0 16px 28px -16px rgba(31,42,46,0.3);}
+  .card .img-wrap{aspect-ratio:4/5; overflow:hidden; position:relative;}
+  .card .img-wrap img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+  .card:hover .img-wrap img{transform:scale(1.06);}
+  .card .tag{
+    position:absolute; top:10px; left:10px; background:var(--ink); color:var(--canvas);
+    font-family:'JetBrains Mono'; font-size:0.65rem; padding:3px 8px; letter-spacing:0.04em;
+  }
+  .card .info{padding:14px 16px 18px;}
+  .card .info .name{font-weight:500; font-size:0.98rem;}
+  .card .info .price{margin-top:6px; color:var(--crimson); font-family:'JetBrains Mono'; font-size:0.85rem;}
+  .filters{display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap;}
+  .filter-btn{
+    font-family:'JetBrains Mono'; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em;
+    padding:8px 14px; border:1px solid var(--thread-line); background:transparent; cursor:pointer;
+    border-radius:var(--radius); color:var(--ink); transition:all .2s ease;
+  }
+  .filter-btn.active, .filter-btn:hover{background:var(--ink); color:var(--canvas); border-color:var(--ink);}
+
+  /* ---------- pricing ---------- */
+  .price-table{width:100%; border-collapse:collapse; margin-top:8px;}
+  .price-table th, .price-table td{
+    text-align:left; padding:16px 14px; border-bottom:1px solid var(--thread-line);
+  }
+  .price-table th{font-family:'JetBrains Mono'; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--teal); font-weight:500;}
+  .price-table td.amt{font-family:'JetBrains Mono'; color:var(--crimson);}
+  .note{margin-top:18px; font-size:0.88rem; color:#6b6459; font-style:italic;}
+
+  /* ---------- order form ---------- */
+  .order{background:var(--ink); color:var(--canvas);}
+  .order .section-head p{color:#c8c2b2;}
+  .order .section-head .mono{color:var(--marigold);}
+  .order-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:0.85rem; margin-bottom:8px; color:#d9d3c4;}
+  .field input, .field select, .field textarea{
+    width:100%; background:rgba(239,233,219,0.06); border:1px solid rgba(239,233,219,0.28);
+    color:var(--canvas); padding:12px 14px; font-family:'Work Sans'; font-size:0.95rem;
+    border-radius:var(--radius);
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#8b8577;}
+  .field textarea{resize:vertical; min-height:90px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .order-summary{
+    background:rgba(239,233,219,0.06); border:1px solid rgba(239,233,219,0.2); padding:24px;
+  }
+  .order-summary h3{font-size:1.05rem; margin-bottom:16px;}
+  .summary-line{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed rgba(239,233,219,0.2); font-size:0.9rem;}
+  .summary-line span:last-child{color:var(--marigold); font-family:'JetBrains Mono';}
+  #waBtn{width:100%; justify-content:center; margin-top:20px; background:var(--marigold); border-color:var(--marigold); color:var(--ink); font-weight:600;}
+  #waBtn:hover{background:var(--crimson); border-color:var(--crimson); color:var(--canvas);}
+  .form-note{font-size:0.8rem; color:#a49e8f; margin-top:14px; line-height:1.5;}
+
+  /* ---------- footer ---------- */
+  footer{padding:56px 0 40px; border-top:1px solid var(--thread-line);}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;}
+  footer .logo{margin-bottom:6px;}
+  footer .foot-links{display:flex; gap:24px;}
+  footer .foot-links a{text-decoration:none; font-size:0.9rem;}
+  .foot-bottom{margin-top:32px; padding-top:20px; border-top:1px solid var(--thread-line); font-size:0.8rem; color:#7a7468; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1; transform:none; transition:none;}
+    .swatch, .card, .card .img-wrap img{transition:none;}
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .swatch-board{height:340px; margin-top:20px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .order-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    nav.links{position:fixed; top:64px; left:0; right:0; background:var(--canvas); flex-direction:column; align-items:flex-start;
+      padding:20px 28px; gap:18px; border-bottom:1px solid var(--thread-line); transform:translateY(-130%); transition:transform .3s ease;}
+    nav.links.open{transform:translateY(0);}
+    .menu-toggle{display:block;}
+    .row2{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12c2-6 6-9 8-9s6 3 8 9c-2 6-6 9-8 9s-6-3-8-9Z" stroke="#a4373a" stroke-width="1.4"/><circle cx="12" cy="12" r="2.4" fill="#d89b3c"/></svg>
+      Thimble &amp; Thread
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="links" id="navLinks">
+      <a href="#how">How it works</a>
+      <a href="#gallery">Samples</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#order" class="btn">Start an order</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow mono"><span class="dot"></span> Made to order · Stitched by hand</div>
+      <h1 class="hero-title">You choose the garment.<br>We <span class="stitch">stitch<svg viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M0 6 Q10 0 20 6 T40 6 T60 6 T80 6 T100 6 T120 6 T140 6 T160 6 T180 6 T200 6" stroke="#d89b3c" stroke-width="2" fill="none"/></svg></span> it in.</h1>
+      <p class="lede">Send us a plain garment or pick one from our supplier list, choose your design and placement, and we embroider it ourselves — no substitutes, no surprises when it arrives.</p>
+      <div class="hero-ctas">
+        <a href="#order" class="btn">Start an order</a>
+        <a href="#gallery" class="btn ghost">See sample work</a>
+      </div>
+    </div>
+    <div class="swatch-board" aria-hidden="true">
+      <div class="swatch s1">
+        <img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=400&q=80" alt="">
+        <div class="code"><span class="n">DMC 321</span><span class="name">Rose motif</span></div>
+      </div>
+      <div class="swatch s2">
+        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&q=80" alt="">
+        <div class="code"><span class="n">DMC 3820</span><span class="name">Monogram</span></div>
+      </div>
+      <div class="swatch s3">
+        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&q=80" alt="">
+        <div class="code"><span class="n">DMC 890</span><span class="name">Leaf border</span></div>
+      </div>
+      <div class="swatch s4">
+        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80" alt="">
+        <div class="code"><span class="n">DMC 666</span><span class="name">Floral panel</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Three steps</span>
+      <h2>From plain cloth to finished piece</h2>
+      <p>The same three steps for every order, whether it's one kurta or a batch for an event.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="num">01</span>
+        <h3>You choose</h3>
+        <p>Pick a garment — yours or one of ours — plus a design, thread colours, and where it should sit on the fabric.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num">02</span>
+        <h3>We source &amp; confirm</h3>
+        <p>If we're supplying the garment, we get it in your size first and confirm final price and timeline with you before starting.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num">03</span>
+        <h3>We embroider &amp; deliver</h3>
+        <p>Every stitch is done in-house by us — never swapped for a plain piece. You get photos before it ships.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Sample work</span>
+      <h2>Designs you can order today</h2>
+      <p>Placeholder gallery — swap these for your own photographed samples once ready.</p>
+    </div>
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="custom">Custom</button>
+      <button class="filter-btn" data-filter="predesigned">Pre-designed</button>
+      <button class="filter-btn" data-filter="bulk">Bulk / Branded</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="card reveal" data-cat="custom">
+        <div class="img-wrap"><span class="tag">CUSTOM</span><img src="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=500&q=80" alt="Name embroidered on garment"></div>
+        <div class="info"><div class="name">Name &amp; initials</div><div class="price">from ₹200</div></div>
+      </div>
+      <div class="card reveal" data-cat="predesigned">
+        <div class="img-wrap"><span class="tag">READY</span><img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80" alt="Floral motif embroidery"></div>
+        <div class="info"><div class="name">Floral motif kurta</div><div class="price">from ₹450</div></div>
+      </div>
+      <div class="card reveal" data-cat="custom">
+        <div class="img-wrap"><span class="tag">CUSTOM</span><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&q=80" alt="Couple design embroidery"></div>
+        <div class="info"><div class="name">Couple / gift design</div><div class="price">from ₹350</div></div>
+      </div>
+      <div class="card reveal" data-cat="bulk">
+        <div class="img-wrap"><span class="tag">BULK</span><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80" alt="Branded logo embroidery"></div>
+        <div class="info"><div class="name">Logo on uniforms</div><div class="price">quote per piece</div></div>
+      </div>
+      <div class="card reveal" data-cat="predesigned">
+        <div class="img-wrap"><span class="tag">READY</span><img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&q=80" alt="Sleeve embroidery detail"></div>
+        <div class="info"><div class="name">Sleeve border detail</div><div class="price">from ₹300</div></div>
+      </div>
+      <div class="card reveal" data-cat="custom">
+        <div class="img-wrap"><span class="tag">CUSTOM</span><img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&q=80" alt="Saree blouse embroidery"></div>
+        <div class="info"><div class="name">Saree blouse panel</div><div class="price">from ₹600</div></div>
+      </div>
+      <div class="card reveal" data-cat="predesigned">
+        <div class="img-wrap"><span class="tag">READY</span><img src="https://images.unsplash.com/photo-1583744946564-b52d01e1f8c2?w=500&q=80" alt="Tote bag embroidery"></div>
+        <div class="info"><div class="name">Embroidered tote bag</div><div class="price">from ₹250</div></div>
+      </div>
+      <div class="card reveal" data-cat="bulk">
+        <div class="img-wrap"><span class="tag">BULK</span><img src="https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?w=500&q=80" alt="Event merchandise embroidery"></div>
+        <div class="info"><div class="name">Event merchandise</div><div class="price">quote per piece</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="background:var(--canvas-dim); border-top:1px solid var(--thread-line); border-bottom:1px solid var(--thread-line);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Pricing</span>
+      <h2>Starting rates</h2>
+      <p>Final price depends on garment, thread, and design size — confirmed with you before we begin.</p>
+    </div>
+    <table class="price-table reveal">
+      <thead><tr><th>Work</th><th>Typical size</th><th>Starting price</th></tr></thead>
+      <tbody>
+        <tr><td>Name / initials</td><td>Up to 3 inches</td><td class="amt">₹200</td></tr>
+        <tr><td>Small motif or logo</td><td>Up to 4 inches</td><td class="amt">₹350</td></tr>
+        <tr><td>Full design panel</td><td>Dress / kurta front</td><td class="amt">₹600+</td></tr>
+        <tr><td>Bulk uniform logos</td><td>Per piece, 10+ units</td><td class="amt">Quote on request</td></tr>
+      </tbody>
+    </table>
+    <p class="note reveal">Prices exclude the base garment cost when we source it for you.</p>
+  </div>
+</section>
+
+<section class="order" id="order">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Order enquiry</span>
+      <h2>Tell us what you'd like made</h2>
+      <p>Fill this in and it opens a WhatsApp message to us with your details — nothing is charged yet, we'll confirm price and timeline with you first.</p>
+    </div>
+    <div class="order-grid">
+      <form id="orderForm" class="reveal">
+        <div class="row2">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" placeholder="e.g. Priya Sharma" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone / WhatsApp</label>
+            <input type="tel" id="phone" placeholder="e.g. 98765 43210" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="garment">Garment</label>
+            <select id="garment">
+              <option>Kurta</option>
+              <option>T-shirt</option>
+              <option>Saree blouse</option>
+              <option>Dupatta / scarf</option>
+              <option>Bag</option>
+              <option>Other (mention in notes)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="source">Who's supplying the garment?</label>
+            <select id="source">
+              <option>I'll send my own garment</option>
+              <option>Please source it for me</option>
+            </select>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="style">Design style</label>
+            <select id="style">
+              <option>Name / initials</option>
+              <option>Small motif or logo</option>
+              <option>Full design panel</option>
+              <option>Bulk / branded order</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="placement">Placement</label>
+            <select id="placement">
+              <option>Front centre</option>
+              <option>Sleeve</option>
+              <option>Back</option>
+              <option>Corner / pocket</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Anything else — colours, size, reference image you'll send</label>
+          <textarea id="notes" placeholder="e.g. Gold thread, size M, will share a reference photo on WhatsApp"></textarea>
+        </div>
+      </form>
+      <div class="order-summary reveal">
+        <h3>Your enquiry summary</h3>
+        <div class="summary-line"><span>Garment</span><span id="sumGarment">Kurta</span></div>
+        <div class="summary-line"><span>Sourcing</span><span id="sumSource">You send it</span></div>
+        <div class="summary-line"><span>Design style</span><span id="sumStyle">Name / initials</span></div>
+        <div class="summary-line"><span>Placement</span><span id="sumPlacement">Front centre</span></div>
+        <a href="#" id="waBtn" class="btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a7.6 7.6 0 0 1-3.8-3.3c-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5L9.4 7.1c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.3c0 1.3 1 2.6 1.1 2.8.1.2 2 3 4.8 4.3 2.7 1.2 2.7.8 3.2.8s1.6-.6 1.8-1.3.2-1.2.2-1.3-.1-.2-.2-.2Z"/><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+          Send enquiry on WhatsApp
+        </a>
+        <p class="form-note">Replace the WhatsApp number in the code (search for "919999999999") with your real business number before publishing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">Thimble &amp; Thread</div>
+        <div class="mono" style="color:#7a7468;">Made-to-order embroidery</div>
+      </div>
+      <div class="foot-links">
+        <a href="#how">How it works</a>
+        <a href="#gallery">Samples</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#order">Order</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Thimble &amp; Thread. Placeholder name — replace with your business name.</span>
+      <span>Built as a starter site — swap photos, prices and contact details freely.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    const expanded = navLinks.classList.contains('open');
+    menuToggle.setAttribute('aria-expanded', expanded);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // gallery filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#galleryGrid .card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        c.style.display = (f === 'all' || c.dataset.cat === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // order summary + WhatsApp link builder
+  const garmentEl = document.getElementById('garment');
+  const sourceEl = document.getElementById('source');
+  const styleEl = document.getElementById('style');
+  const placementEl = document.getElementById('placement');
+  const nameEl = document.getElementById('name');
+  const phoneEl = document.getElementById('phone');
+  const notesEl = document.getElementById('notes');
+  const waBtn = document.getElementById('waBtn');
+
+  const WHATSAPP_NUMBER = '919999999999'; // <-- replace with your real WhatsApp number, country code + number, no + or spaces
+
+  function updateSummary(){
+    document.getElementById('sumGarment').textContent = garmentEl.value;
+    document.getElementById('sumSource').textContent = sourceEl.value === "I'll send my own garment" ? 'You send it' : "We source it";
+    document.getElementById('sumStyle').textContent = styleEl.value;
+    document.getElementById('sumPlacement').textContent = placementEl.value;
+  }
+  [garmentEl, sourceEl, styleEl, placementEl].forEach(el => el.addEventListener('change', updateSummary));
+  updateSummary();
+
+  function buildWhatsAppLink(){
+    const lines = [
+      "Hi! I'd like to place an embroidery enquiry.",
+      `Name: ${nameEl.value || '-'}`,
+      `Phone: ${phoneEl.value || '-'}`,
+      `Garment: ${garmentEl.value}`,
+      `Sourcing: ${sourceEl.value}`,
+      `Design style: ${styleEl.value}`,
+      `Placement: ${placementEl.value}`,
+      `Notes: ${notesEl.value || '-'}`
+    ];
+    const text = encodeURIComponent(lines.join('\n'));
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+  }
+
+  waBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if(!nameEl.value || !phoneEl.value){
+      nameEl.reportValidity ? (nameEl.value || nameEl.reportValidity()) : null;
+      if(!nameEl.value){ nameEl.focus(); return; }
+      if(!phoneEl.value){ phoneEl.focus(); return; }
+    }
+    window.open(buildWhatsAppLink(), '_blank');
+  });
+</script>
+
+</body>
+</html>
