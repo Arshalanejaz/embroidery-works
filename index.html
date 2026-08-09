@@ -9,119 +9,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1f2a2e;
-    --canvas:#efe9db;
-    --canvas-dim:#e4ddcb;
-    --marigold:#d89b3c;
-    --crimson:#a4373a;
-    --teal:#2c4a47;
-    --charcoal:#2a2622;
-    --thread-line: rgba(42,38,34,0.16);
-    --radius: 2px;
+    --ink:#1f2a2e; --canvas:#efe9db; --canvas-dim:#e4ddcb;
+    --marigold:#d89b3c; --crimson:#a4373a; --teal:#2c4a47; --charcoal:#2a2622;
+    --thread-line: rgba(42,38,34,0.16); --radius: 2px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--canvas);
-    color:var(--charcoal);
-    font-family:'Work Sans', sans-serif;
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,.display{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
-    margin:0;
-  }
-  .mono{
-    font-family:'JetBrains Mono', monospace;
-    letter-spacing:0.04em;
-    text-transform:uppercase;
-    font-size:0.72rem;
-  }
+  body{margin:0;background:var(--canvas);color:var(--charcoal);font-family:'Work Sans', sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Fraunces', serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
+  .mono{font-family:'JetBrains Mono', monospace;letter-spacing:0.04em;text-transform:uppercase;font-size:0.72rem;}
   a{color:inherit;}
   img{max-width:100%;display:block;}
+  button{font-family:inherit;}
   .wrap{max-width:1160px;margin:0 auto;padding:0 28px;}
   :focus-visible{outline:2px solid var(--crimson); outline-offset:3px;}
 
-  /* ---------- header ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(239,233,219,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--thread-line);
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:18px 0;
-  }
-  .logo{
-    font-family:'Fraunces', serif; font-size:1.3rem; font-weight:600;
-    display:flex; align-items:center; gap:8px;
-  }
+  /* header */
+  header{position:sticky; top:0; z-index:50; background:rgba(239,233,219,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--thread-line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:18px 0; gap:16px;}
+  .logo{font-family:'Fraunces', serif; font-size:1.3rem; font-weight:600; display:flex; align-items:center; gap:8px;}
   .logo svg{width:22px;height:22px;flex:none;}
   nav.links{display:flex; gap:28px; align-items:center;}
-  nav.links a{
-    text-decoration:none; font-size:0.92rem; color:var(--ink);
-    position:relative; padding-bottom:2px;
-  }
-  nav.links a:not(.btn)::after{
-    content:''; position:absolute; left:0; bottom:-3px; width:0; height:1px;
-    background:var(--crimson); transition:width .25s ease;
-  }
+  nav.links a{text-decoration:none; font-size:0.92rem; color:var(--ink); position:relative; padding-bottom:2px;}
+  nav.links a:not(.btn)::after{content:''; position:absolute; left:0; bottom:-3px; width:0; height:1px; background:var(--crimson); transition:width .25s ease;}
   nav.links a:not(.btn):hover::after{width:100%;}
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--ink); color:var(--canvas);
-    padding:10px 18px; border-radius:var(--radius);
-    text-decoration:none; font-size:0.85rem; font-weight:500;
-    border:1px solid var(--ink);
-    transition:transform .2s ease, background .2s ease;
-  }
+  .btn{display:inline-flex; align-items:center; gap:8px; background:var(--ink); color:var(--canvas); padding:10px 18px; border-radius:var(--radius); text-decoration:none; font-size:0.85rem; font-weight:500; border:1px solid var(--ink); cursor:pointer; transition:transform .2s ease, background .2s ease;}
   .btn:hover{background:var(--crimson); border-color:var(--crimson); transform:translateY(-1px);}
   .btn.ghost{background:transparent; color:var(--ink);}
   .btn.ghost:hover{background:var(--ink); color:var(--canvas);}
+  .btn.small{padding:8px 14px; font-size:0.8rem;}
+  .btn.block{width:100%; justify-content:center;}
+  .cart-icon-btn{position:relative; background:none; border:1px solid var(--thread-line); border-radius:var(--radius); padding:9px 11px; cursor:pointer; display:flex; align-items:center;}
+  .cart-icon-btn svg{width:19px;height:19px;}
+  .cart-count{position:absolute; top:-7px; right:-7px; background:var(--crimson); color:#fff; font-family:'JetBrains Mono'; font-size:0.65rem; min-width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0 3px;}
   .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
   .menu-toggle svg{width:24px;height:24px;}
 
-  /* ---------- hero ---------- */
-  .hero{
-    padding:88px 0 64px; position:relative; overflow:hidden;
-  }
-  .hero .wrap{
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    color:var(--teal); margin-bottom:18px;
-  }
+  /* hero */
+  .hero{padding:88px 0 64px; position:relative; overflow:hidden;}
+  .hero .wrap{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; color:var(--teal); margin-bottom:18px;}
   .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--crimson);}
-  h1.hero-title{
-    font-size:clamp(2.4rem, 4.6vw, 3.6rem);
-    line-height:1.05;
-  }
-  h1.hero-title .stitch{
-    position:relative; white-space:nowrap; color:var(--crimson); font-style:italic; font-weight:500;
-  }
-  h1.hero-title .stitch svg{
-    position:absolute; left:0; bottom:-10px; width:100%; height:12px;
-  }
-  .hero p.lede{
-    margin-top:22px; max-width:46ch; font-size:1.08rem; color:#4b463f;
-  }
+  h1.hero-title{font-size:clamp(2.4rem, 4.6vw, 3.6rem); line-height:1.05;}
+  h1.hero-title .stitch{position:relative; white-space:nowrap; color:var(--crimson); font-style:italic; font-weight:500;}
+  h1.hero-title .stitch svg{position:absolute; left:0; bottom:-10px; width:100%; height:12px;}
+  .hero p.lede{margin-top:22px; max-width:46ch; font-size:1.08rem; color:#4b463f;}
   .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
-
-  .swatch-board{
-    position:relative; height:420px;
-  }
-  .swatch{
-    position:absolute; width:190px; background:var(--canvas); border:1px solid var(--thread-line);
-    padding:14px; box-shadow:0 14px 30px -14px rgba(31,42,46,0.35);
-    transition:transform .3s ease, box-shadow .3s ease;
-  }
+  .swatch-board{position:relative; height:420px;}
+  .swatch{position:absolute; width:190px; background:var(--canvas); border:1px solid var(--thread-line); padding:14px; box-shadow:0 14px 30px -14px rgba(31,42,46,0.35); transition:transform .3s ease, box-shadow .3s ease;}
   .swatch:hover{transform:translateY(-6px) rotate(0deg) !important; box-shadow:0 20px 34px -12px rgba(31,42,46,0.4); z-index:5;}
   .swatch img{width:100%; height:140px; object-fit:cover; border:1px solid var(--thread-line);}
   .swatch .code{margin-top:10px; display:flex; justify-content:space-between; align-items:baseline;}
@@ -132,83 +67,57 @@
   .s3{top:230px; left:10%; transform:rotate(3deg); z-index:1;}
   .s4{top:190px; left:52%; transform:rotate(-4deg); z-index:2;}
 
-  /* ---------- section shell ---------- */
   section{padding:88px 0;}
   .section-head{max-width:640px; margin-bottom:52px;}
   .section-head .mono{color:var(--teal); margin-bottom:14px; display:block;}
   .section-head h2{font-size:clamp(1.8rem, 3vw, 2.4rem);}
   .section-head p{margin-top:14px; color:#4b463f;}
 
-  /* ---------- how it works ---------- */
   .how{background:var(--canvas-dim); border-top:1px solid var(--thread-line); border-bottom:1px solid var(--thread-line);}
   .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
   .step{position:relative; padding-top:28px;}
-  .step .num{
-    font-family:'Fraunces', serif; font-style:italic; font-size:2.4rem; color:var(--marigold);
-    display:block; margin-bottom:14px;
-  }
+  .step .num{font-family:'Fraunces', serif; font-style:italic; font-size:2.4rem; color:var(--marigold); display:block; margin-bottom:14px;}
   .step h3{font-size:1.15rem; margin-bottom:10px;}
   .step p{color:#4b463f; font-size:0.95rem;}
-  .step:not(:last-child)::after{
-    content:''; position:absolute; top:34px; right:-18px; width:1px; height:60%;
-    background:repeating-linear-gradient(to bottom, var(--thread-line) 0 6px, transparent 6px 12px);
-  }
+  .step:not(:last-child)::after{content:''; position:absolute; top:34px; right:-18px; width:1px; height:60%; background:repeating-linear-gradient(to bottom, var(--thread-line) 0 6px, transparent 6px 12px);}
   @media (max-width:820px){ .step:not(:last-child)::after{display:none;} }
 
-  /* ---------- gallery ---------- */
-  .gallery-grid{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
-  }
-  .card{
-    background:var(--canvas); border:1px solid var(--thread-line); overflow:hidden;
-    transition:transform .25s ease, box-shadow .25s ease;
-  }
+  /* gallery */
+  .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .card{background:var(--canvas); border:1px solid var(--thread-line); overflow:hidden; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;}
   .card:hover{transform:translateY(-5px); box-shadow:0 16px 28px -16px rgba(31,42,46,0.3);}
   .card .img-wrap{aspect-ratio:4/5; overflow:hidden; position:relative;}
   .card .img-wrap img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
   .card:hover .img-wrap img{transform:scale(1.06);}
-  .card .tag{
-    position:absolute; top:10px; left:10px; background:var(--ink); color:var(--canvas);
-    font-family:'JetBrains Mono'; font-size:0.65rem; padding:3px 8px; letter-spacing:0.04em;
-  }
+  .card .tag{position:absolute; top:10px; left:10px; background:var(--ink); color:var(--canvas); font-family:'JetBrains Mono'; font-size:0.65rem; padding:3px 8px; letter-spacing:0.04em;}
+  .card .badge-orders{position:absolute; top:10px; right:10px; background:rgba(239,233,219,0.94); color:var(--ink); font-family:'JetBrains Mono'; font-size:0.62rem; padding:3px 7px; border-radius:2px;}
   .card .info{padding:14px 16px 18px;}
   .card .info .name{font-weight:500; font-size:0.98rem;}
-  .card .info .price{margin-top:6px; color:var(--crimson); font-family:'JetBrains Mono'; font-size:0.85rem;}
+  .card .stars{display:flex; align-items:center; gap:6px; margin-top:6px;}
+  .stars svg{width:13px;height:13px;}
+  .stars .stxt{font-size:0.76rem; color:#7a7468;}
+  .card .info .price{margin-top:8px; color:var(--crimson); font-family:'JetBrains Mono'; font-size:0.85rem;}
   .filters{display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap;}
-  .filter-btn{
-    font-family:'JetBrains Mono'; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em;
-    padding:8px 14px; border:1px solid var(--thread-line); background:transparent; cursor:pointer;
-    border-radius:var(--radius); color:var(--ink); transition:all .2s ease;
-  }
+  .filter-btn{font-family:'JetBrains Mono'; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; padding:8px 14px; border:1px solid var(--thread-line); background:transparent; cursor:pointer; border-radius:var(--radius); color:var(--ink); transition:all .2s ease;}
   .filter-btn.active, .filter-btn:hover{background:var(--ink); color:var(--canvas); border-color:var(--ink);}
 
-  /* ---------- pricing ---------- */
   .price-table{width:100%; border-collapse:collapse; margin-top:8px;}
-  .price-table th, .price-table td{
-    text-align:left; padding:16px 14px; border-bottom:1px solid var(--thread-line);
-  }
+  .price-table th, .price-table td{text-align:left; padding:16px 14px; border-bottom:1px solid var(--thread-line);}
   .price-table th{font-family:'JetBrains Mono'; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--teal); font-weight:500;}
   .price-table td.amt{font-family:'JetBrains Mono'; color:var(--crimson);}
   .note{margin-top:18px; font-size:0.88rem; color:#6b6459; font-style:italic;}
 
-  /* ---------- order form ---------- */
   .order{background:var(--ink); color:var(--canvas);}
   .order .section-head p{color:#c8c2b2;}
   .order .section-head .mono{color:var(--marigold);}
   .order-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
   .field{margin-bottom:20px;}
   .field label{display:block; font-size:0.85rem; margin-bottom:8px; color:#d9d3c4;}
-  .field input, .field select, .field textarea{
-    width:100%; background:rgba(239,233,219,0.06); border:1px solid rgba(239,233,219,0.28);
-    color:var(--canvas); padding:12px 14px; font-family:'Work Sans'; font-size:0.95rem;
-    border-radius:var(--radius);
-  }
+  .field input, .field select, .field textarea{width:100%; background:rgba(239,233,219,0.06); border:1px solid rgba(239,233,219,0.28); color:var(--canvas); padding:12px 14px; font-family:'Work Sans'; font-size:0.95rem; border-radius:var(--radius);}
   .field input::placeholder, .field textarea::placeholder{color:#8b8577;}
   .field textarea{resize:vertical; min-height:90px;}
   .row2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-  .order-summary{
-    background:rgba(239,233,219,0.06); border:1px solid rgba(239,233,219,0.2); padding:24px;
-  }
+  .order-summary{background:rgba(239,233,219,0.06); border:1px solid rgba(239,233,219,0.2); padding:24px;}
   .order-summary h3{font-size:1.05rem; margin-bottom:16px;}
   .summary-line{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed rgba(239,233,219,0.2); font-size:0.9rem;}
   .summary-line span:last-child{color:var(--marigold); font-family:'JetBrains Mono';}
@@ -216,7 +125,6 @@
   #waBtn:hover{background:var(--crimson); border-color:var(--crimson); color:var(--canvas);}
   .form-note{font-size:0.8rem; color:#a49e8f; margin-top:14px; line-height:1.5;}
 
-  /* ---------- footer ---------- */
   footer{padding:56px 0 40px; border-top:1px solid var(--thread-line);}
   .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;}
   footer .logo{margin-bottom:6px;}
@@ -224,35 +132,128 @@
   footer .foot-links a{text-decoration:none; font-size:0.9rem;}
   .foot-bottom{margin-top:32px; padding-top:20px; border-top:1px solid var(--thread-line); font-size:0.8rem; color:#7a7468; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
 
-  /* ---------- reveal ---------- */
   .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.in{opacity:1; transform:translateY(0);}
 
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    .reveal{opacity:1; transform:none; transition:none;}
-    .swatch, .card, .card .img-wrap img{transition:none;}
-  }
+  /* demo banner */
+  .demo-banner{background:var(--marigold); color:var(--ink); text-align:center; padding:8px 16px; font-size:0.8rem; font-family:'JetBrains Mono';}
 
-  /* ---------- responsive ---------- */
+  /* ===== Product Modal ===== */
+  .overlay{position:fixed; inset:0; background:rgba(31,42,46,0.55); z-index:100; display:none; align-items:flex-start; justify-content:center; overflow-y:auto; padding:40px 16px;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--canvas); max-width:1000px; width:100%; margin:auto; position:relative; border:1px solid var(--thread-line);}
+  .modal-close{position:absolute; top:14px; right:14px; background:var(--ink); color:var(--canvas); border:none; width:34px; height:34px; border-radius:50%; cursor:pointer; z-index:5; display:flex; align-items:center; justify-content:center;}
+  .modal-close svg{width:16px;height:16px;}
+  .pd-grid{display:grid; grid-template-columns:1fr 1fr; gap:0;}
+  .pd-gallery{padding:28px; background:var(--canvas-dim);}
+  .pd-main{aspect-ratio:1/1; overflow:hidden; border:1px solid var(--thread-line); background:#fff; cursor:zoom-in; position:relative;}
+  .pd-main img{width:100%; height:100%; object-fit:cover; transition:transform .08s linear; transform-origin:center;}
+  .pd-thumbs{display:flex; gap:10px; margin-top:12px;}
+  .pd-thumb{width:64px; height:64px; border:2px solid transparent; cursor:pointer; overflow:hidden; opacity:0.65; transition:opacity .2s, border-color .2s;}
+  .pd-thumb img{width:100%;height:100%;object-fit:cover;}
+  .pd-thumb.active{border-color:var(--crimson); opacity:1;}
+  .zoom-hint{font-size:0.72rem; color:#7a7468; margin-top:8px; font-family:'JetBrains Mono';}
+
+  .pd-info{padding:32px; overflow-y:auto; max-height:85vh;}
+  .pd-tag{display:inline-block; background:var(--ink); color:var(--canvas); font-family:'JetBrains Mono'; font-size:0.65rem; padding:3px 8px; margin-bottom:12px;}
+  .pd-info h2{font-size:1.6rem; margin-bottom:8px;}
+  .stars-row{display:flex; align-items:center; gap:8px; margin-bottom:14px;}
+  .stars-row svg{width:15px;height:15px;}
+  .stars-row .rtext{font-size:0.85rem; color:#4b463f;}
+  .pd-price{font-family:'JetBrains Mono'; color:var(--crimson); font-size:1.3rem; margin-bottom:16px;}
+  .stat-pills{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
+  .pill{font-family:'JetBrains Mono'; font-size:0.7rem; padding:6px 10px; border:1px solid var(--thread-line); border-radius:20px; display:flex; align-items:center; gap:5px;}
+  .pill.ok{color:var(--teal); border-color:var(--teal);}
+  .pill.warn{color:var(--crimson); border-color:var(--crimson);}
+  .pd-desc{font-size:0.92rem; color:#4b463f; margin-bottom:20px; line-height:1.7;}
+  .pd-desc b{color:var(--charcoal);}
+  .pd-actions{display:flex; gap:12px; margin-bottom:8px;}
+  .qty-box{display:flex; align-items:center; border:1px solid var(--thread-line); border-radius:var(--radius);}
+  .qty-box button{background:none; border:none; width:34px; height:40px; cursor:pointer; font-size:1rem;}
+  .qty-box span{width:30px; text-align:center; font-family:'JetBrains Mono'; font-size:0.9rem;}
+  .added-msg{font-size:0.8rem; color:var(--teal); margin-top:10px; display:none;}
+  .added-msg.show{display:block;}
+
+  .return-box{background:var(--canvas-dim); border:1px solid var(--thread-line); padding:14px 16px; margin:22px 0; font-size:0.85rem;}
+  .return-box .rt-title{font-family:'JetBrains Mono'; font-size:0.68rem; color:var(--teal); margin-bottom:10px;}
+  .return-reason-row{display:flex; justify-content:space-between; padding:4px 0; color:#4b463f;}
+  .return-reason-row b{color:var(--charcoal); font-weight:500;}
+
+  .pd-tabs{display:flex; gap:20px; border-bottom:1px solid var(--thread-line); margin:26px 0 18px;}
+  .pd-tab{background:none; border:none; padding:8px 0; font-size:0.88rem; cursor:pointer; color:#7a7468; border-bottom:2px solid transparent; margin-bottom:-1px;}
+  .pd-tab.active{color:var(--ink); border-color:var(--crimson); font-weight:500;}
+  .pd-tabpane{display:none;}
+  .pd-tabpane.active{display:block;}
+
+  .review{border-bottom:1px solid var(--thread-line); padding:14px 0;}
+  .review:last-child{border-bottom:none;}
+  .review-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;}
+  .review-name{font-weight:500; font-size:0.9rem;}
+  .review-date{font-size:0.75rem; color:#8b8577;}
+  .review-stars{display:flex; gap:2px; margin-bottom:6px;}
+  .review-stars svg{width:12px;height:12px;}
+  .review-text{font-size:0.88rem; color:#4b463f;}
+
+  .qa-item{border-bottom:1px solid var(--thread-line); padding:14px 0;}
+  .qa-item:last-child{border-bottom:none;}
+  .qa-q{font-size:0.88rem; font-weight:500; display:flex; gap:8px;}
+  .qa-q .qtag{color:var(--crimson); font-family:'JetBrains Mono'; font-size:0.7rem;}
+  .qa-a{font-size:0.85rem; color:#4b463f; margin-top:6px; padding-left:18px; border-left:2px solid var(--marigold);}
+  .qa-form{display:flex; gap:10px; margin-top:16px;}
+  .qa-form input{flex:1; padding:10px 12px; border:1px solid var(--thread-line); font-family:inherit; font-size:0.85rem;}
+
+  /* lightbox */
+  .lightbox{position:fixed; inset:0; background:rgba(20,24,25,0.95); z-index:200; display:none; align-items:center; justify-content:center;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw; max-height:90vh; object-fit:contain;}
+  .lightbox-close{position:absolute; top:20px; right:24px; background:none; border:none; color:#fff; cursor:pointer;}
+  .lightbox-close svg{width:26px;height:26px;}
+
+  /* cart drawer */
+  .cart-drawer{position:fixed; top:0; right:0; height:100%; width:400px; max-width:92vw; background:var(--canvas); z-index:150; box-shadow:-10px 0 30px rgba(0,0,0,0.2); transform:translateX(100%); transition:transform .3s ease; display:flex; flex-direction:column;}
+  .cart-drawer.open{transform:translateX(0);}
+  .cart-head{display:flex; justify-content:space-between; align-items:center; padding:20px 22px; border-bottom:1px solid var(--thread-line);}
+  .cart-head h3{font-size:1.1rem;}
+  .cart-items{flex:1; overflow-y:auto; padding:16px 22px;}
+  .cart-item{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--thread-line);}
+  .cart-item img{width:56px; height:56px; object-fit:cover; border:1px solid var(--thread-line);}
+  .cart-item-info{flex:1;}
+  .cart-item-info .nm{font-size:0.88rem; font-weight:500;}
+  .cart-item-info .pr{font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--crimson); margin-top:4px;}
+  .cart-item .rm{background:none; border:none; cursor:pointer; color:#8b8577; font-size:0.75rem; text-decoration:underline; padding:0; margin-top:6px;}
+  .cart-empty{color:#8b8577; font-size:0.88rem; text-align:center; padding:40px 0;}
+  .cart-foot{padding:20px 22px; border-top:1px solid var(--thread-line);}
+  .cart-total{display:flex; justify-content:space-between; font-family:'JetBrains Mono'; margin-bottom:14px; font-size:1rem;}
+  .backdrop-dim{position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:140; display:none;}
+  .backdrop-dim.open{display:block;}
+
+  /* checkout modal */
+  .checkout-body{padding:8px 0;}
+  .co-success{text-align:center; padding:30px 10px;}
+  .co-success svg{width:48px;height:48px; color:var(--teal); margin-bottom:16px;}
+
   @media (max-width:980px){
     .hero .wrap{grid-template-columns:1fr;}
     .swatch-board{height:340px; margin-top:20px;}
     .gallery-grid{grid-template-columns:repeat(2,1fr);}
     .order-grid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
+    .pd-grid{grid-template-columns:1fr;}
+    .pd-info{max-height:none;}
   }
   @media (max-width:680px){
-    nav.links{position:fixed; top:64px; left:0; right:0; background:var(--canvas); flex-direction:column; align-items:flex-start;
-      padding:20px 28px; gap:18px; border-bottom:1px solid var(--thread-line); transform:translateY(-130%); transition:transform .3s ease;}
+    nav.links{position:fixed; top:64px; left:0; right:0; background:var(--canvas); flex-direction:column; align-items:flex-start; padding:20px 28px; gap:18px; border-bottom:1px solid var(--thread-line); transform:translateY(-130%); transition:transform .3s ease; z-index:60;}
     nav.links.open{transform:translateY(0);}
     .menu-toggle{display:block;}
     .row2{grid-template-columns:1fr;}
     .gallery-grid{grid-template-columns:1fr 1fr;}
+    .cart-drawer{width:100vw;}
   }
 </style>
 </head>
 <body>
+
+<div class="demo-banner">DEMO SITE — products, reviews, orders &amp; returns below are sample data for preview only</div>
 
 <header>
   <div class="wrap nav">
@@ -265,9 +266,13 @@
     </button>
     <nav class="links" id="navLinks">
       <a href="#how">How it works</a>
-      <a href="#gallery">Samples</a>
+      <a href="#gallery">Shop</a>
       <a href="#pricing">Pricing</a>
-      <a href="#order" class="btn">Start an order</a>
+      <a href="#order" class="btn">Custom order</a>
+      <button class="cart-icon-btn" id="cartOpenBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
     </nav>
   </div>
 </header>
@@ -277,29 +282,17 @@
     <div>
       <div class="eyebrow mono"><span class="dot"></span> Made to order · Stitched by hand</div>
       <h1 class="hero-title">You choose the garment.<br>We <span class="stitch">stitch<svg viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M0 6 Q10 0 20 6 T40 6 T60 6 T80 6 T100 6 T120 6 T140 6 T160 6 T180 6 T200 6" stroke="#d89b3c" stroke-width="2" fill="none"/></svg></span> it in.</h1>
-      <p class="lede">Send us a plain garment or pick one from our supplier list, choose your design and placement, and we embroider it ourselves — no substitutes, no surprises when it arrives.</p>
+      <p class="lede">Browse our designs, click any piece to see it up close with full details, reviews and ratings — then order in a couple of clicks.</p>
       <div class="hero-ctas">
-        <a href="#order" class="btn">Start an order</a>
-        <a href="#gallery" class="btn ghost">See sample work</a>
+        <a href="#gallery" class="btn">Shop designs</a>
+        <a href="#order" class="btn ghost">Custom order instead</a>
       </div>
     </div>
     <div class="swatch-board" aria-hidden="true">
-      <div class="swatch s1">
-        <img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=400&q=80" alt="">
-        <div class="code"><span class="n">DMC 321</span><span class="name">Rose motif</span></div>
-      </div>
-      <div class="swatch s2">
-        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&q=80" alt="">
-        <div class="code"><span class="n">DMC 3820</span><span class="name">Monogram</span></div>
-      </div>
-      <div class="swatch s3">
-        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&q=80" alt="">
-        <div class="code"><span class="n">DMC 890</span><span class="name">Leaf border</span></div>
-      </div>
-      <div class="swatch s4">
-        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80" alt="">
-        <div class="code"><span class="n">DMC 666</span><span class="name">Floral panel</span></div>
-      </div>
+      <div class="swatch s1"><img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=400&q=80" alt=""><div class="code"><span class="n">DMC 321</span><span class="name">Rose motif</span></div></div>
+      <div class="swatch s2"><img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&q=80" alt=""><div class="code"><span class="n">DMC 3820</span><span class="name">Monogram</span></div></div>
+      <div class="swatch s3"><img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&q=80" alt=""><div class="code"><span class="n">DMC 890</span><span class="name">Leaf border</span></div></div>
+      <div class="swatch s4"><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80" alt=""><div class="code"><span class="n">DMC 666</span><span class="name">Floral panel</span></div></div>
     </div>
   </div>
 </section>
@@ -312,21 +305,9 @@
       <p>The same three steps for every order, whether it's one kurta or a batch for an event.</p>
     </div>
     <div class="steps">
-      <div class="step reveal">
-        <span class="num">01</span>
-        <h3>You choose</h3>
-        <p>Pick a garment — yours or one of ours — plus a design, thread colours, and where it should sit on the fabric.</p>
-      </div>
-      <div class="step reveal">
-        <span class="num">02</span>
-        <h3>We source &amp; confirm</h3>
-        <p>If we're supplying the garment, we get it in your size first and confirm final price and timeline with you before starting.</p>
-      </div>
-      <div class="step reveal">
-        <span class="num">03</span>
-        <h3>We embroider &amp; deliver</h3>
-        <p>Every stitch is done in-house by us — never swapped for a plain piece. You get photos before it ships.</p>
-      </div>
+      <div class="step reveal"><span class="num">01</span><h3>You choose</h3><p>Pick a garment — yours or one of ours — plus a design, thread colours, and where it should sit on the fabric.</p></div>
+      <div class="step reveal"><span class="num">02</span><h3>We source &amp; confirm</h3><p>If we're supplying the garment, we get it in your size first and confirm final price and timeline with you before starting.</p></div>
+      <div class="step reveal"><span class="num">03</span><h3>We embroider &amp; deliver</h3><p>Every stitch is done in-house by us — never swapped for a plain piece. You get photos before it ships.</p></div>
     </div>
   </div>
 </section>
@@ -334,9 +315,9 @@
 <section id="gallery">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="mono">Sample work</span>
-      <h2>Designs you can order today</h2>
-      <p>Placeholder gallery — swap these for your own photographed samples once ready.</p>
+      <span class="mono">Shop</span>
+      <h2>Click any design to see full details</h2>
+      <p>Photos, ratings, reviews, order &amp; return stats and a Q&amp;A — sample data shown for preview.</p>
     </div>
     <div class="filters reveal">
       <button class="filter-btn active" data-filter="all">All</button>
@@ -344,40 +325,7 @@
       <button class="filter-btn" data-filter="predesigned">Pre-designed</button>
       <button class="filter-btn" data-filter="bulk">Bulk / Branded</button>
     </div>
-    <div class="gallery-grid" id="galleryGrid">
-      <div class="card reveal" data-cat="custom">
-        <div class="img-wrap"><span class="tag">CUSTOM</span><img src="blob:https://gemini.google.com/5e7bbcc0-5100-46a1-83ca-f47f273f73e1" alt="Name embroidered on garment"></div>
-        <div class="info"><div class="name">Name &amp; initials</div><div class="price">from ₹1700</div></div>
-      </div>
-      <div class="card reveal" data-cat="predesigned">
-        <div class="img-wrap"><span class="tag">READY</span><img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80" alt="Floral motif embroidery"></div>
-        <div class="info"><div class="name">Floral motif kurta</div><div class="price">from ₹4000</div></div>
-      </div>
-      <div class="card reveal" data-cat="custom">
-        <div class="img-wrap"><span class="tag">CUSTOM</span><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&q=80" alt="Couple design embroidery"></div>
-        <div class="info"><div class="name">Couple / gift design</div><div class="price">from ₹350</div></div>
-      </div>
-      <div class="card reveal" data-cat="bulk">
-        <div class="img-wrap"><span class="tag">BULK</span><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80" alt="Branded logo embroidery"></div>
-        <div class="info"><div class="name">Logo on uniforms</div><div class="price">quote per piece</div></div>
-      </div>
-      <div class="card reveal" data-cat="predesigned">
-        <div class="img-wrap"><span class="tag">READY</span><img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&q=80" alt="Sleeve embroidery detail"></div>
-        <div class="info"><div class="name">Sleeve border detail</div><div class="price">from ₹300</div></div>
-      </div>
-      <div class="card reveal" data-cat="custom">
-        <div class="img-wrap"><span class="tag">CUSTOM</span><img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&q=80" alt="Saree blouse embroidery"></div>
-        <div class="info"><div class="name">Saree blouse panel</div><div class="price">from ₹600</div></div>
-      </div>
-      <div class="card reveal" data-cat="predesigned">
-        <div class="img-wrap"><span class="tag">READY</span><img src="https://images.unsplash.com/photo-1583744946564-b52d01e1f8c2?w=500&q=80" alt="Tote bag embroidery"></div>
-        <div class="info"><div class="name">Embroidered tote bag</div><div class="price">from ₹250</div></div>
-      </div>
-      <div class="card reveal" data-cat="bulk">
-        <div class="img-wrap"><span class="tag">BULK</span><img src="https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?w=500&q=80" alt="Event merchandise embroidery"></div>
-        <div class="info"><div class="name">Event merchandise</div><div class="price">quote per piece</div></div>
-      </div>
-    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 </section>
 
@@ -411,59 +359,26 @@
     <div class="order-grid">
       <form id="orderForm" class="reveal">
         <div class="row2">
-          <div class="field">
-            <label for="name">Your name</label>
-            <input type="text" id="name" placeholder="e.g. Priya Sharma" required>
+          <div class="field"><label for="name">Your name</label><input type="text" id="name" placeholder="e.g. Priya Sharma" required></div>
+          <div class="field"><label for="phone">Phone / WhatsApp</label><input type="tel" id="phone" placeholder="e.g. 98765 43210" required></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="garment">Garment</label>
+            <select id="garment"><option>Kurta</option><option>T-shirt</option><option>Saree blouse</option><option>Dupatta / scarf</option><option>Bag</option><option>Other (mention in notes)</option></select>
           </div>
-          <div class="field">
-            <label for="phone">Phone / WhatsApp</label>
-            <input type="tel" id="phone" placeholder="e.g. 98765 43210" required>
+          <div class="field"><label for="source">Who's supplying the garment?</label>
+            <select id="source"><option>I'll send my own garment</option><option>Please source it for me</option></select>
           </div>
         </div>
         <div class="row2">
-          <div class="field">
-            <label for="garment">Garment</label>
-            <select id="garment">
-              <option>Kurta</option>
-              <option>T-shirt</option>
-              <option>Saree blouse</option>
-              <option>Dupatta / scarf</option>
-              <option>Bag</option>
-              <option>Other (mention in notes)</option>
-            </select>
+          <div class="field"><label for="style">Design style</label>
+            <select id="style"><option>Name / initials</option><option>Small motif or logo</option><option>Full design panel</option><option>Bulk / branded order</option></select>
           </div>
-          <div class="field">
-            <label for="source">Who's supplying the garment?</label>
-            <select id="source">
-              <option>I'll send my own garment</option>
-              <option>Please source it for me</option>
-            </select>
+          <div class="field"><label for="placement">Placement</label>
+            <select id="placement"><option>Front centre</option><option>Sleeve</option><option>Back</option><option>Corner / pocket</option></select>
           </div>
         </div>
-        <div class="row2">
-          <div class="field">
-            <label for="style">Design style</label>
-            <select id="style">
-              <option>Name / initials</option>
-              <option>Small motif or logo</option>
-              <option>Full design panel</option>
-              <option>Bulk / branded order</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="placement">Placement</label>
-            <select id="placement">
-              <option>Front centre</option>
-              <option>Sleeve</option>
-              <option>Back</option>
-              <option>Corner / pocket</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label for="notes">Anything else — colours, size, reference image you'll send</label>
-          <textarea id="notes" placeholder="e.g. Gold thread, size M, will share a reference photo on WhatsApp"></textarea>
-        </div>
+        <div class="field"><label for="notes">Anything else — colours, size, reference image you'll send</label><textarea id="notes" placeholder="e.g. Gold thread, size M, will share a reference photo on WhatsApp"></textarea></div>
       </form>
       <div class="order-summary reveal">
         <h3>Your enquiry summary</h3>
@@ -484,101 +399,509 @@
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <div class="logo">Thimble &amp; Thread</div>
-        <div class="mono" style="color:#7a7468;">Made-to-order embroidery</div>
-      </div>
-      <div class="foot-links">
-        <a href="#how">How it works</a>
-        <a href="#gallery">Samples</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#order">Order</a>
-      </div>
+      <div><div class="logo">Thimble &amp; Thread</div><div class="mono" style="color:#7a7468;">Made-to-order embroidery</div></div>
+      <div class="foot-links"><a href="#how">How it works</a><a href="#gallery">Shop</a><a href="#pricing">Pricing</a><a href="#order">Custom order</a></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Thimble &amp; Thread. Placeholder name — replace with your business name.</span>
-      <span>Built as a starter site — swap photos, prices and contact details freely.</span>
+      <span>Product data on this page is sample/demo data.</span>
     </div>
   </div>
 </footer>
 
-<script>
-  // mobile menu
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinks = document.getElementById('navLinks');
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    const expanded = navLinks.classList.contains('open');
-    menuToggle.setAttribute('aria-expanded', expanded);
-  });
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+<!-- Product Modal -->
+<div class="overlay" id="productOverlay">
+  <div class="modal">
+    <button class="modal-close" id="pdClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button>
+    <div class="pd-grid">
+      <div class="pd-gallery">
+        <div class="pd-main" id="pdMain"><img id="pdMainImg" src="" alt=""></div>
+        <div class="zoom-hint">Hover to zoom · click for full-screen view</div>
+        <div class="pd-thumbs" id="pdThumbs"></div>
+      </div>
+      <div class="pd-info" id="pdInfo">
+        <span class="pd-tag" id="pdTag"></span>
+        <h2 id="pdName"></h2>
+        <div class="stars-row"><span id="pdStars"></span><span class="rtext" id="pdRatingText"></span></div>
+        <div class="pd-price" id="pdPrice"></div>
+        <div class="stat-pills">
+          <span class="pill ok" id="pdOrders"></span>
+          <span class="pill warn" id="pdReturns"></span>
+        </div>
+        <div class="pd-desc" id="pdDesc"></div>
 
-  // gallery filter
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('#galleryGrid .card');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const f = btn.dataset.filter;
-      cards.forEach(c => {
-        c.style.display = (f === 'all' || c.dataset.cat === f) ? '' : 'none';
-      });
+        <div class="pd-actions">
+          <div class="qty-box">
+            <button id="qtyMinus" type="button">−</button>
+            <span id="qtyVal">1</span>
+            <button id="qtyPlus" type="button">+</button>
+          </div>
+          <button class="btn ghost" id="addToCartBtn" style="flex:1;">Add to cart</button>
+        </div>
+        <button class="btn block" id="buyNowBtn" style="margin-top:10px;">Buy now</button>
+        <div class="added-msg" id="addedMsg">Added to cart ✓</div>
+
+        <div class="return-box">
+          <div class="rt-title">Return reasons reported (sample data)</div>
+          <div id="returnReasons"></div>
+        </div>
+
+        <div class="pd-tabs">
+          <button class="pd-tab active" data-tab="reviews">Reviews</button>
+          <button class="pd-tab" data-tab="qa">Questions &amp; Answers</button>
+        </div>
+        <div class="pd-tabpane active" id="tab-reviews"></div>
+        <div class="pd-tabpane" id="tab-qa">
+          <div id="qaList"></div>
+          <div class="qa-form">
+            <input type="text" id="qaInput" placeholder="Ask a question about this product...">
+            <button class="btn small" id="qaSubmit">Ask</button>
+          </div>
+          <p class="form-note" style="margin-top:10px;">Demo only — questions aren't saved after refresh. On your live site, connect this to a form or WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- Cart drawer -->
+<div class="backdrop-dim" id="backdropDim"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head"><h3>Your cart</h3><button class="modal-close" id="cartClose" style="position:static;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="btn block" id="checkoutBtn">Checkout</button>
+    <p class="form-note" style="margin-top:10px;">Demo checkout — no real payment is taken.</p>
+  </div>
+</div>
+
+<!-- Checkout modal -->
+<div class="overlay" id="checkoutOverlay">
+  <div class="modal" style="max-width:460px;">
+    <button class="modal-close" id="coClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button>
+    <div class="pd-info checkout-body" id="checkoutBody" style="max-height:none; padding:32px;">
+      <h2 style="margin-bottom:18px;">Checkout (demo)</h2>
+      <div class="field"><label>Full name</label><input type="text" id="coName" placeholder="Your name"></div>
+      <div class="field"><label>Phone</label><input type="tel" id="coPhone" placeholder="Phone number"></div>
+      <div class="field"><label>Delivery address</label><textarea id="coAddress" placeholder="Address"></textarea></div>
+      <button class="btn block" id="coPlaceOrder">Place order</button>
+      <p class="form-note" style="margin-top:10px;">This is a demo flow — no payment gateway is connected yet.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- sample product data ---------- */
+const PRODUCTS = [
+  {
+    id:'p1', cat:'custom', tag:'CUSTOM', name:'Name &amp; Initials Embroidery', price:200,
+    images:[
+      'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=700&q=80',
+      'https://images.unsplash.com/photo-1445205170230-053b83016050?w=700&q=80',
+      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=700&q=80'
+    ],
+    rating:4.6, reviewCount:38, orders:212, returns:6,
+    desc:'Your name or initials hand-stitched in the thread colour of your choice. <b>Cotton</b> or blended fabric supported. Turnaround 3–5 days.',
+    returnReasons:[['Size mismatch',3],['Changed mind',2],['Thread colour different from expectation',1]],
+    reviews:[
+      {name:'Ritika S.', stars:5, date:'12 Jul 2026', text:'Very neat stitching, exactly what I asked for.'},
+      {name:'Aman K.', stars:4, date:'2 Jul 2026', text:'Good quality, took one extra day but worth it.'},
+      {name:'Fatima R.', stars:5, date:'20 Jun 2026', text:'Ordered for a gift, they loved it.'}
+    ],
+    qa:[{q:'Can I get 2 names on one shirt?', a:'Yes, just mention both in your order notes and we\'ll adjust placement.'}]
+  },
+  {
+    id:'p2', cat:'predesigned', tag:'READY', name:'Floral Motif Kurta Panel', price:450,
+    images:[
+      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=700&q=80',
+      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=700&q=80',
+      'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=700&q=80'
+    ],
+    rating:4.8, reviewCount:52, orders:301, returns:4,
+    desc:'A ready floral design panel stitched onto a plain cotton kurta of your chosen size. <b>100% cotton</b> base garment.',
+    returnReasons:[['Size mismatch',3],['Fabric feel different than expected',1]],
+    reviews:[
+      {name:'Sneha P.', stars:5, date:'15 Jul 2026', text:'Beautiful floral work, colours are vibrant.'},
+      {name:'Priya M.', stars:5, date:'5 Jul 2026', text:'Received compliments the first time I wore it.'}
+    ],
+    qa:[{q:'Is this available in size XL?', a:'Yes, all sizes S–XXL are available, just select at order time.'}]
+  },
+  {
+    id:'p3', cat:'custom', tag:'CUSTOM', name:'Couple / Gift Design', price:350,
+    images:[
+      'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=700&q=80',
+      'https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=700&q=80',
+      'https://images.unsplash.com/photo-1445205170230-053b83016050?w=700&q=80'
+    ],
+    rating:4.5, reviewCount:21, orders:98, returns:5,
+    desc:'A custom couple or gift motif, stitched to match your reference photo where possible. Great for anniversaries and birthdays.',
+    returnReasons:[['Design didn\'t match reference photo',3],['Delivery delay',2]],
+    reviews:[
+      {name:'Vikram T.', stars:4, date:'8 Jul 2026', text:'Nice gift for my wife, minor delay in delivery though.'},
+      {name:'Neha J.', stars:5, date:'1 Jul 2026', text:'Loved the detail in the stitching.'}
+    ],
+    qa:[]
+  },
+  {
+    id:'p4', cat:'bulk', tag:'BULK', name:'Logo on Uniforms', price:0,
+    images:[
+      'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&q=80',
+      'https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?w=700&q=80',
+      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=700&q=80'
+    ],
+    rating:4.7, reviewCount:14, orders:19, returns:1,
+    desc:'Bulk logo embroidery for schools, shops, and small businesses. Price quoted per piece after design and quantity confirmation.',
+    returnReasons:[['Logo size adjustment needed',1]],
+    reviews:[{name:'Café Cotton Store', stars:5, date:'18 Jun 2026', text:'Handled our staff uniform order well, consistent quality across all pieces.'}],
+    qa:[{q:'What\'s the minimum order quantity?', a:'We typically start bulk pricing at 10 pieces.'}]
+  },
+  {
+    id:'p5', cat:'predesigned', tag:'READY', name:'Sleeve Border Detail', price:300,
+    images:[
+      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=700&q=80',
+      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=700&q=80',
+      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=700&q=80'
+    ],
+    rating:4.4, reviewCount:17, orders:64, returns:3,
+    desc:'A subtle embroidered border along the sleeve edge — pairs well with plain kurtas and dresses.',
+    returnReasons:[['Design smaller than expected',2],['Changed mind',1]],
+    reviews:[{name:'Ayesha K.', stars:4, date:'22 Jun 2026', text:'Simple and elegant, exactly what I needed.'}],
+    qa:[]
+  },
+  {
+    id:'p6', cat:'custom', tag:'CUSTOM', name:'Saree Blouse Panel', price:600,
+    images:[
+      'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=700&q=80',
+      'https://images.unsplash.com/photo-1445205170230-053b83016050?w=700&q=80',
+      'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=700&q=80'
+    ],
+    rating:4.9, reviewCount:29, orders:87, returns:2,
+    desc:'A detailed embroidered panel for your saree blouse — full front or back coverage, your choice of thread palette.',
+    returnReasons:[['Fit adjustment needed',2]],
+    reviews:[
+      {name:'Meera D.', stars:5, date:'11 Jul 2026', text:'Absolutely stunning work, better than the photos.'},
+      {name:'Kavya S.', stars:5, date:'30 Jun 2026', text:'Perfect for my sister\'s wedding, thank you.'}
+    ],
+    qa:[{q:'Can you match a specific saree colour?', a:'Yes, send us a fabric swatch photo and we\'ll match thread shades as closely as possible.'}]
+  },
+  {
+    id:'p7', cat:'predesigned', tag:'READY', name:'Embroidered Tote Bag', price:250,
+    images:[
+      'https://images.unsplash.com/photo-1583744946564-b52d01e1f8c2?w=700&q=80',
+      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=700&q=80',
+      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=700&q=80'
+    ],
+    rating:4.3, reviewCount:11, orders:45, returns:2,
+    desc:'A canvas tote bag with a small embroidered motif — practical, everyday accessory.',
+    returnReasons:[['Not as pictured',1],['Changed mind',1]],
+    reviews:[{name:'Anjali B.', stars:4, date:'25 Jun 2026', text:'Sturdy bag, nice small design on the front.'}],
+    qa:[]
+  },
+  {
+    id:'p8', cat:'bulk', tag:'BULK', name:'Event Merchandise', price:0,
+    images:[
+      'https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?w=700&q=80',
+      'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&q=80',
+      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=700&q=80'
+    ],
+    rating:4.6, reviewCount:9, orders:12, returns:0,
+    desc:'Custom embroidered merchandise for events, weddings, and corporate gifting — priced per piece and quantity.',
+    returnReasons:[],
+    reviews:[{name:'Studio Bloom Events', stars:5, date:'9 Jun 2026', text:'Great for our event favours, delivered on time.'}],
+    qa:[]
+  }
+];
+
+const WHATSAPP_NUMBER = '919999999999'; // replace with your real WhatsApp number
+
+/* ---------- render gallery ---------- */
+const galleryGrid = document.getElementById('galleryGrid');
+function starsSVG(rating, size){
+  let html = '';
+  for(let i=1;i<=5;i++){
+    const filled = i <= Math.round(rating);
+    html += `<svg viewBox="0 0 20 20" fill="${filled ? '#d89b3c' : 'none'}" stroke="#d89b3c" stroke-width="1.2"><polygon points="10,1.5 12.6,7 18.5,7.7 14,11.8 15.3,17.7 10,14.6 4.7,17.7 6,11.8 1.5,7.7 7.4,7"/></svg>`;
+  }
+  return html;
+}
+function renderGallery(filter){
+  galleryGrid.innerHTML = '';
+  PRODUCTS.filter(p => filter==='all' || p.cat===filter).forEach(p => {
+    const priceLabel = p.price ? `from ₹${p.price}` : 'quote per piece';
+    const card = document.createElement('div');
+    card.className = 'card reveal in';
+    card.dataset.cat = p.cat;
+    card.innerHTML = `
+      <div class="img-wrap">
+        <span class="tag">${p.tag}</span>
+        <span class="badge-orders">${p.orders} ordered</span>
+        <img src="${p.images[0]}" alt="${p.name}">
+      </div>
+      <div class="info">
+        <div class="name">${p.name}</div>
+        <div class="stars">${starsSVG(p.rating)}<span class="stxt">${p.rating} (${p.reviewCount})</span></div>
+        <div class="price">${priceLabel}</div>
+      </div>`;
+    card.addEventListener('click', () => openProduct(p.id));
+    galleryGrid.appendChild(card);
+  });
+}
+renderGallery('all');
+
+const filterBtns = document.querySelectorAll('.filter-btn');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGallery(btn.dataset.filter);
+  });
+});
+
+/* ---------- cart state (in-memory, resets on reload - demo) ---------- */
+let cart = [];
+const cartCountEl = document.getElementById('cartCount');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+
+function updateCartUI(){
+  cartCountEl.textContent = cart.reduce((s,i)=>s+i.qty,0);
+  if(cart.length===0){
+    cartItemsEl.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+  } else {
+    cartItemsEl.innerHTML = cart.map((item, idx) => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="">
+        <div class="cart-item-info">
+          <div class="nm">${item.name}</div>
+          <div class="pr">₹${item.price || 'Quote'} × ${item.qty}</div>
+          <button class="rm" data-idx="${idx}">Remove</button>
+        </div>
+      </div>`).join('');
+    cartItemsEl.querySelectorAll('.rm').forEach(btn => {
+      btn.addEventListener('click', () => { cart.splice(+btn.dataset.idx,1); updateCartUI(); });
+    });
+  }
+  const total = cart.reduce((s,i)=> s + (i.price||0)*i.qty, 0);
+  cartTotalEl.textContent = '₹' + total;
+}
+updateCartUI();
+
+document.getElementById('cartOpenBtn').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+document.getElementById('backdropDim').addEventListener('click', () => { closeCart(); closeProduct(); closeCheckout(); });
+function openCart(){ document.getElementById('cartDrawer').classList.add('open'); document.getElementById('backdropDim').classList.add('open'); }
+function closeCart(){ document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('backdropDim').classList.remove('open'); }
+
+/* ---------- product modal ---------- */
+let currentProduct = null;
+let currentQty = 1;
+
+function openProduct(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  currentProduct = p; currentQty = 1;
+  document.getElementById('qtyVal').textContent = 1;
+  document.getElementById('addedMsg').classList.remove('show');
+
+  document.getElementById('pdTag').textContent = p.tag;
+  document.getElementById('pdName').innerHTML = p.name;
+  document.getElementById('pdStars').innerHTML = starsSVG(p.rating);
+  document.getElementById('pdRatingText').textContent = `${p.rating} out of 5 (${p.reviewCount} reviews)`;
+  document.getElementById('pdPrice').textContent = p.price ? `₹${p.price}` : 'Price on request';
+  document.getElementById('pdOrders').textContent = `${p.orders} orders delivered`;
+  document.getElementById('pdReturns').textContent = `${p.returns} returned`;
+  document.getElementById('pdDesc').innerHTML = p.desc;
+
+  document.getElementById('pdMainImg').src = p.images[0];
+  const thumbs = document.getElementById('pdThumbs');
+  thumbs.innerHTML = p.images.map((img,i)=>`<div class="pd-thumb ${i===0?'active':''}" data-i="${i}"><img src="${img}"></div>`).join('');
+  thumbs.querySelectorAll('.pd-thumb').forEach(t => {
+    t.addEventListener('click', () => {
+      thumbs.querySelectorAll('.pd-thumb').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('pdMainImg').src = p.images[+t.dataset.i];
     });
   });
 
-  // reveal on scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.12 });
-  revealEls.forEach(el => io.observe(el));
-
-  // order summary + WhatsApp link builder
-  const garmentEl = document.getElementById('garment');
-  const sourceEl = document.getElementById('source');
-  const styleEl = document.getElementById('style');
-  const placementEl = document.getElementById('placement');
-  const nameEl = document.getElementById('name');
-  const phoneEl = document.getElementById('phone');
-  const notesEl = document.getElementById('notes');
-  const waBtn = document.getElementById('waBtn');
-
-  const WHATSAPP_NUMBER = '919999999999'; // <-- replace with your real WhatsApp number, country code + number, no + or spaces
-
-  function updateSummary(){
-    document.getElementById('sumGarment').textContent = garmentEl.value;
-    document.getElementById('sumSource').textContent = sourceEl.value === "I'll send my own garment" ? 'You send it' : "We source it";
-    document.getElementById('sumStyle').textContent = styleEl.value;
-    document.getElementById('sumPlacement').textContent = placementEl.value;
-  }
-  [garmentEl, sourceEl, styleEl, placementEl].forEach(el => el.addEventListener('change', updateSummary));
-  updateSummary();
-
-  function buildWhatsAppLink(){
-    const lines = [
-      "Hi! I'd like to place an embroidery enquiry.",
-      `Name: ${nameEl.value || '-'}`,
-      `Phone: ${phoneEl.value || '-'}`,
-      `Garment: ${garmentEl.value}`,
-      `Sourcing: ${sourceEl.value}`,
-      `Design style: ${styleEl.value}`,
-      `Placement: ${placementEl.value}`,
-      `Notes: ${notesEl.value || '-'}`
-    ];
-    const text = encodeURIComponent(lines.join('\n'));
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+  const rr = document.getElementById('returnReasons');
+  if(p.returnReasons.length===0){
+    rr.innerHTML = '<div class="return-reason-row">No returns reported yet.</div>';
+  } else {
+    rr.innerHTML = p.returnReasons.map(([reason,count]) => `<div class="return-reason-row"><span>${reason}</span><b>${count}</b></div>`).join('');
   }
 
-  waBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if(!nameEl.value || !phoneEl.value){
-      nameEl.reportValidity ? (nameEl.value || nameEl.reportValidity()) : null;
-      if(!nameEl.value){ nameEl.focus(); return; }
-      if(!phoneEl.value){ phoneEl.focus(); return; }
-    }
-    window.open(buildWhatsAppLink(), '_blank');
+  document.getElementById('tab-reviews').innerHTML = p.reviews.length
+    ? p.reviews.map(r => `
+      <div class="review">
+        <div class="review-top"><span class="review-name">${r.name}</span><span class="review-date">${r.date}</span></div>
+        <div class="review-stars">${starsSVG(r.stars)}</div>
+        <div class="review-text">${r.text}</div>
+      </div>`).join('')
+    : '<p class="form-note">No reviews yet for this product.</p>';
+
+  renderQA(p);
+
+  document.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('.pd-tab[data-tab="reviews"]').classList.add('active');
+  document.getElementById('tab-reviews').classList.add('active');
+  document.getElementById('tab-qa').classList.remove('active');
+
+  document.getElementById('productOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function renderQA(p){
+  const qaList = document.getElementById('qaList');
+  qaList.innerHTML = p.qa.length
+    ? p.qa.map(qa => `<div class="qa-item"><div class="qa-q"><span class="qtag">Q</span>${qa.q}</div>${qa.a ? `<div class="qa-a"><b>A:</b> ${qa.a}</div>` : '<div class="qa-a">Awaiting answer from the seller...</div>'}</div>`).join('')
+    : '<p class="form-note">No questions yet — be the first to ask.</p>';
+}
+function closeProduct(){ document.getElementById('productOverlay').classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('pdClose').addEventListener('click', closeProduct);
+document.getElementById('productOverlay').addEventListener('click', (e)=>{ if(e.target.id==='productOverlay') closeProduct(); });
+
+document.querySelectorAll('.pd-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.pd-tabpane').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
   });
+});
+
+document.getElementById('qaSubmit').addEventListener('click', () => {
+  const input = document.getElementById('qaInput');
+  if(!input.value.trim()) return;
+  currentProduct.qa.push({q: input.value.trim(), a: ''});
+  input.value = '';
+  renderQA(currentProduct);
+});
+
+/* qty controls */
+document.getElementById('qtyMinus').addEventListener('click', ()=>{ currentQty = Math.max(1,currentQty-1); document.getElementById('qtyVal').textContent = currentQty; });
+document.getElementById('qtyPlus').addEventListener('click', ()=>{ currentQty += 1; document.getElementById('qtyVal').textContent = currentQty; });
+
+/* add to cart / buy now */
+document.getElementById('addToCartBtn').addEventListener('click', () => {
+  addCurrentToCart();
+  const msg = document.getElementById('addedMsg');
+  msg.classList.add('show');
+  setTimeout(()=>msg.classList.remove('show'), 2000);
+});
+document.getElementById('buyNowBtn').addEventListener('click', () => {
+  addCurrentToCart();
+  closeProduct();
+  openCheckout();
+});
+function addCurrentToCart(){
+  const existing = cart.find(i => i.id===currentProduct.id);
+  if(existing){ existing.qty += currentQty; }
+  else { cart.push({id:currentProduct.id, name:currentProduct.name, price:currentProduct.price, image:currentProduct.images[0], qty:currentQty}); }
+  updateCartUI();
+}
+
+/* lightbox zoom */
+const pdMain = document.getElementById('pdMain');
+const pdMainImg = document.getElementById('pdMainImg');
+pdMain.addEventListener('mousemove', (e) => {
+  const rect = pdMain.getBoundingClientRect();
+  const x = ((e.clientX - rect.left)/rect.width)*100;
+  const y = ((e.clientY - rect.top)/rect.height)*100;
+  pdMainImg.style.transformOrigin = `${x}% ${y}%`;
+  pdMainImg.style.transform = 'scale(2)';
+});
+pdMain.addEventListener('mouseleave', () => { pdMainImg.style.transform = 'scale(1)'; });
+pdMain.addEventListener('click', () => {
+  document.getElementById('lightboxImg').src = pdMainImg.src;
+  document.getElementById('lightbox').classList.add('open');
+});
+document.getElementById('lightboxClose').addEventListener('click', () => document.getElementById('lightbox').classList.remove('open'));
+document.getElementById('lightbox').addEventListener('click', (e)=>{ if(e.target.id==='lightbox') document.getElementById('lightbox').classList.remove('open'); });
+
+/* checkout flow */
+function openCheckout(){
+  document.getElementById('checkoutBody').innerHTML = `
+    <h2 style="margin-bottom:18px;">Checkout (demo)</h2>
+    <div class="field"><label>Full name</label><input type="text" id="coName" placeholder="Your name"></div>
+    <div class="field"><label>Phone</label><input type="tel" id="coPhone" placeholder="Phone number"></div>
+    <div class="field"><label>Delivery address</label><textarea id="coAddress" placeholder="Address"></textarea></div>
+    <button class="btn block" id="coPlaceOrder">Place order</button>
+    <p class="form-note" style="margin-top:10px;">This is a demo flow — no payment gateway is connected yet.</p>`;
+  document.getElementById('coPlaceOrder').addEventListener('click', placeDemoOrder);
+  document.getElementById('checkoutOverlay').classList.add('open');
+}
+function closeCheckout(){ document.getElementById('checkoutOverlay').classList.remove('open'); }
+document.getElementById('checkoutBtn').addEventListener('click', () => { closeCart(); openCheckout(); });
+document.getElementById('coClose').addEventListener('click', closeCheckout);
+document.getElementById('checkoutOverlay').addEventListener('click', (e)=>{ if(e.target.id==='checkoutOverlay') closeCheckout(); });
+
+function placeDemoOrder(){
+  document.getElementById('checkoutBody').innerHTML = `
+    <div class="co-success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+      <h2>Order placed (demo)</h2>
+      <p class="form-note" style="margin-top:10px;">In a real store this would confirm the order and trigger payment. Connect a payment gateway and order database to make this live.</p>
+    </div>`;
+  cart = [];
+  updateCartUI();
+}
+
+/* ---------- mobile menu ---------- */
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', navLinks.classList.contains('open'));
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+/* ---------- reveal on scroll ---------- */
+const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }); }, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- order enquiry form (WhatsApp) ---------- */
+const garmentEl = document.getElementById('garment');
+const sourceEl = document.getElementById('source');
+const styleEl = document.getElementById('style');
+const placementEl = document.getElementById('placement');
+const nameEl = document.getElementById('name');
+const phoneEl = document.getElementById('phone');
+const notesEl = document.getElementById('notes');
+const waBtn = document.getElementById('waBtn');
+
+function updateSummary(){
+  document.getElementById('sumGarment').textContent = garmentEl.value;
+  document.getElementById('sumSource').textContent = sourceEl.value === "I'll send my own garment" ? 'You send it' : "We source it";
+  document.getElementById('sumStyle').textContent = styleEl.value;
+  document.getElementById('sumPlacement').textContent = placementEl.value;
+}
+[garmentEl, sourceEl, styleEl, placementEl].forEach(el => el.addEventListener('change', updateSummary));
+updateSummary();
+
+function buildWhatsAppLink(){
+  const lines = [
+    "Hi! I'd like to place an embroidery enquiry.",
+    `Name: ${nameEl.value || '-'}`,
+    `Phone: ${phoneEl.value || '-'}`,
+    `Garment: ${garmentEl.value}`,
+    `Sourcing: ${sourceEl.value}`,
+    `Design style: ${styleEl.value}`,
+    `Placement: ${placementEl.value}`,
+    `Notes: ${notesEl.value || '-'}`
+  ];
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\\n'))}`;
+}
+waBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  if(!nameEl.value){ nameEl.focus(); return; }
+  if(!phoneEl.value){ phoneEl.focus(); return; }
+  window.open(buildWhatsAppLink(), '_blank');
+});
 </script>
 
 </body>
